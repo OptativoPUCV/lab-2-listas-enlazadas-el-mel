@@ -98,7 +98,16 @@ void * popBack(List * list) {
 }
 
 void * popCurrent(List * list) {
-    return NULL;
+    if (list == NULL || list->current == NULL) return NULL;
+    Node * nodo_eliminar = list->current;
+    void * dato = nodo_eliminar->data;
+    if (nodo_eliminar->prev != NULL) nodo_eliminar->prev->next = nodo_eliminar->next;
+    else list->head = nodo_eliminar->next;
+    if (nodo_eliminar->next != NULL) nodo_eliminar->next->prev = nodo_eliminar->prev;
+    else list->tail = nodo_eliminar->prev;
+    list->current = nodo_eliminar->next;
+    free(nodo_eliminar);
+    return dato;
 }
 
 void cleanList(List * list) {
